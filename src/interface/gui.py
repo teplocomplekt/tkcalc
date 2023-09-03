@@ -1,4 +1,3 @@
-
 import logging
 import math
 import re
@@ -17,11 +16,12 @@ from utils.logger import MyHandlerText
 from render.drawer import Drawer
 from render.render import Render
 from utils.settings import GRID_POSITION, PAD
+
 my_logger = logging.getLogger('my_logger')
 
 
 class App(tk.Tk):
-    
+
     def create_item_steel_frame(self):
         parent = ttk.LabelFrame(text='Сталь')
         parent.grid_columnconfigure(0, weight=1)
@@ -41,7 +41,6 @@ class App(tk.Tk):
             )
         return parent
 
-    
     def chamfer_callback(self):
         state = self.additional_info_chamfer.get()
         if state:
@@ -51,7 +50,6 @@ class App(tk.Tk):
             self.additional_info_cut.set(value=False)
             self.btn_cut.config(state=tk.NORMAL)
 
-    
     def create_item_additional_info_chamfer(self, parent):
         btn = ttk.Checkbutton(parent, text='Фаска', variable=self.additional_info_chamfer,
                               command=self.chamfer_callback)
@@ -63,22 +61,18 @@ class App(tk.Tk):
         label = ttk.Label(parent, text='градусов')
         label.grid(row=0, column=2, **PAD, sticky=tk.NW)
 
-    
     def create_item_additional_info_cut(self, parent):
         self.btn_cut = ttk.Checkbutton(parent, text='Подрезка/Торцовка', variable=self.additional_info_cut)
         self.btn_cut.grid(row=0, column=0, **PAD, sticky=tk.NW)
 
-    
     def create_item_additional_info_defects_insp(self, parent):
         btn = ttk.Checkbutton(parent, text='Дефектоскопия', variable=self.additional_info_defects_insp)
         btn.grid(row=0, column=0, **PAD, sticky=tk.NW)
 
-    
     def create_item_additional_info_ultrasonic_insp(self, parent):
         btn = ttk.Checkbutton(parent, text='УЗК', variable=self.additional_info_ultrasonic_insp)
         btn.grid(row=0, column=0, **PAD, sticky=tk.NW)
 
-    
     def create_item_additional_info_hole_weld(self, root):
         parent = ttk.LabelFrame(root, text='Технологическое отверстие')
 
@@ -122,7 +116,6 @@ class App(tk.Tk):
 
         return parent
 
-    
     def create_item_additional_info(self, root):
         parent = ttk.LabelFrame(root, text='Дополнительные услуги')
         parent.grid_columnconfigure(0, weight=1)
@@ -162,9 +155,20 @@ class App(tk.Tk):
             else:
                 self.enableChildren(child)
 
-    
-    def create_item_input_alpha(self, root):
-        parent = ttk.LabelFrame(root, text='Угол α °')
+    def input_alpha_item(self, root):
+        ttk.Label(root, text='Угол α °').grid(GRID_POSITION | {
+            'row': 0,
+            'column': 0
+        })
+
+        parent = ttk.Frame(root)
+        parent.grid(
+            # GRID_POSITION |
+            {
+                'row': 0,
+                'column': 1
+            })
+
         for index, item in enumerate([60, 90]):
             btn = ttk.Radiobutton(
                 parent,
@@ -173,31 +177,38 @@ class App(tk.Tk):
                 variable=self.alpha,
             )
             btn.grid(
-                row=0,
-                column=index,
-                **PAD,
-                sticky=tk.NW
+                # GRID_POSITION |
+                {
+                    'row': 0,
+                    'column': index,
+                    # **PAD,
+                    'sticky': tk.NW
+                }
             )
+
+    def input_dm_item(self, root):
+
+        ttk.Label(root, text='Dмал').grid(
+            GRID_POSITION |
+            {
+                'row': 1,
+                'column': 0
+            })
+
+        self.entry_Dm = tk.Entry(root, textvariable=self.Dm, width='8')
+        self.entry_Dm.grid(
+            GRID_POSITION |
+            {
+                'row': 1,
+                'column': 1
+            })
+
+    def create_input_cone_frame(self, root):
+        parent = ttk.LabelFrame(root, text='Коническое днище')
+        self.input_alpha_item(parent)
+        self.input_dm_item(parent)
         return parent
 
-    
-    def create_item_input_cone(self, root):
-        parent = ttk.LabelFrame(root, text='Коническое днище')
-        self.frame_create_item_input_alpha = self.create_item_input_alpha(parent)
-        # WARNING: Decompyle incomplete
-
-    def create_item_input_dm(self, root):
-        parent = ttk.Frame(root)
-        parent.grid_columnconfigure(1, weight=1)
-
-        label_Dm = ttk.Label(parent, text = 'Dмал')
-        label_Dm.grid(GRID_POSITION | {
-            'row': 0,
-            'column': 0 })
-        self.entry_Dm = tk.Entry(parent, textvariable = self.Dm, width='8')
-    # WARNING: Decompyle incomplete
-
-    
     def create_item_input_data(self, root):
 
         parent = ttk.Frame(root)
@@ -233,9 +244,13 @@ class App(tk.Tk):
         self.entry_p = tk.Entry(parent, textvariable=self.p, width='8')
         self.entry_p.grid(row=6, column=1, **PAD, sticky=tk.NSEW)
 
+        label_c1 = ttk.Label(parent, text='c1')
+        label_c1.grid(GRID_POSITION | {'row': 7, 'column': 0})
+        self.entry_c1 = tk.Entry(parent, textvariable=self.c1, width='8')
+        self.entry_c1.grid(row=7, column=1, **PAD, sticky=tk.NSEW)
+
         return parent
 
-    
     def create_buttons(self, root):
         parent = ttk.Frame(root)
         parent.grid_columnconfigure(0, weight=1)
@@ -250,7 +265,6 @@ class App(tk.Tk):
 
         return parent
 
-    
     def create_calc(self, parent1, parent2):
         label_total_height = ttk.Label(parent1, text='Общая высота днища')
         label_total_height.grid(row=0, column=0, **PAD, sticky=tk.NSEW)
@@ -287,7 +301,7 @@ class App(tk.Tk):
 
         self.label_calc_total_k1 = ttk.Label(parent2, textvariable=self.calc_total_k1, state=tk.DISABLED)
         self.label_calc_total_k1.grid(row=5, column=0, **PAD, sticky=tk.NSEW)
-    
+
     def create_logger(self):
         parent = ttk.Frame()
         self.logtext = tk.Text(parent, state="disabled", width=50, height=5)
@@ -318,7 +332,7 @@ class App(tk.Tk):
         # Иконка
         self.wm_iconphoto(False, tk.PhotoImage(file=BASE_DIR / 'icon.png'))
 
-    def __init__(self = None):
+    def __init__(self=None):
         super(App, self).__init__()
 
         frame_logger = self.create_logger()
@@ -330,16 +344,17 @@ class App(tk.Tk):
         self.item_steel = tk.StringVar(value=ItemSteelEnum.default())
 
         # Входные данные
-        self.D = tk.StringVar(value=1000)  # Диаметр
-        self.R = tk.StringVar(value=730)  # Радиус большой
-        self.r = tk.StringVar(value=100)  # Радиус малый
-        self.s = tk.StringVar(value=20)  # Толщина
-        self.h = tk.StringVar(value=100)  # Высота борта
-        self.d = tk.StringVar(value=100)  # Диаметр тех. отверстия
-        self.p = tk.StringVar(value=1)  # Максимальное давление
+        self.D = tk.StringVar(value='1000')  # Диаметр
+        self.Dm = tk.StringVar(value='500')  # Диаметр малый (конический)
+        self.R = tk.StringVar(value='730')  # Радиус большой
+        self.r = tk.StringVar(value='100')  # Радиус малый
+        self.s = tk.StringVar(value='20')  # Толщина
+        self.h = tk.StringVar(value='100')  # Высота борта
+        self.d = tk.StringVar(value='100')  # Диаметр тех. отверстия
+        self.p = tk.StringVar(value='1')  # Максимальное давление
+        self.c1 = tk.StringVar(value='2.0')  # Максимальное давление
 
         self.alpha = tk.IntVar(value=90)  # угол для конуса
-        self.Dm = tk.StringVar(value=500)  # Диаметр малый (конический)
         # Доп услуги
         self.additional_info_chamfer = tk.BooleanVar()
         self.additional_info_chamfer_value = tk.StringVar(value=45)
@@ -349,12 +364,12 @@ class App(tk.Tk):
         self.additional_info_hole_weld = tk.StringVar(value=ItemHoleWeldEnum.default())
 
         # Расчет
-        self.calc_total_height = tk.IntVar()
-        self.calc_total_diameter = tk.IntVar()
-        self.calc_total_weight = tk.IntVar()
-        self.calc_total_pressure = tk.IntVar()
-        self.calc_total_k = tk.DoubleVar()
-        self.calc_total_k1 = tk.DoubleVar()
+        self.calc_total_height = tk.StringVar()
+        self.calc_total_diameter = tk.StringVar()
+        self.calc_total_weight = tk.StringVar()
+        self.calc_total_pressure = tk.StringVar()
+        self.calc_total_k = tk.StringVar()
+        self.calc_total_k1 = tk.StringVar()
 
         ItemFormWidget(
             text='Форма днища',
@@ -367,7 +382,6 @@ class App(tk.Tk):
             variable=self.item_steel,
         ).grid(row=0, column=1, **PAD, sticky=tk.NSEW)
 
-
         left_frame = ttk.Frame()
         left_frame.grid_columnconfigure(0, weight=1)
 
@@ -377,10 +391,10 @@ class App(tk.Tk):
         frame_additional_info_hole_weld = self.create_item_additional_info_hole_weld(left_frame)
         frame_additional_info_hole_weld.grid(row=1, column=0, **PAD, sticky=tk.NSEW, )
 
-        self.frame_create_item_input_alpha = self.create_item_input_alpha(left_frame)
-        self.frame_create_item_input_alpha.grid(row=2, column=0, **PAD, sticky=tk.NSEW)
+        self.input_cone_frame = self.create_input_cone_frame(left_frame)
+        self.input_cone_frame.grid(row=2, column=0, **PAD, sticky=tk.NSEW)
 
-        self.disableChildren(self.frame_create_item_input_alpha)
+        # self.disableChildren(self.input_alpha_frame)
 
         left_frame.grid(row=1, column=0, **PAD, sticky=tk.NSEW)
 
@@ -390,8 +404,6 @@ class App(tk.Tk):
         frame_logger.grid(row=3, column=0, **PAD, sticky=tk.NSEW, columnspan=2)
 
         # ==========
-
-
 
         right_frame = ttk.Frame()
         right_frame.grid_columnconfigure(0, weight=1)
@@ -484,15 +496,25 @@ class App(tk.Tk):
         a = self.alpha.get()
         return a
 
+    def get_Dm(self):
+        Dm = self.Dm.get()
+        return self.validate(Dm, 'D.мал')
+
+    def get_c1(self):
+        c1 = self.Dm.get()
+        return c1
+
     def init_args(self):
         try:
             D = self.get_D()
+            Dm = self.get_Dm()
             d = self.get_d()
             R = self.get_R()
             r = self.get_r()
             s = self.get_s()
             h = self.get_h()
             p = self.get_p()
+            c1 = self.get_c1()
             form = self.item_form.get()
             steel = self.item_steel.get()
             weld = self.get_weld()
@@ -503,12 +525,15 @@ class App(tk.Tk):
             ultrasonic_insp = self.additional_info_ultrasonic_insp.get()
             alpha = self.get_alpha()
 
+
             return {
-                'D': D, 'd': d, 'R': R, 'r': r, 's': s, 'h': h, 'p': p, 'form': form, 'steel': steel, 'weld': weld,
+                'D': D, 'Dm': Dm, 'd': d, 'R': R, 'r': r, 's': s, 'h': h, 'p': p, 'c1': c1, 'form': form,
+                'steel': steel, 'weld': weld,
                 'chamfer': chamfer, 'chamfer_value': chamfer_value, 'cut': cut,
                 'defects_insp': defects_insp,
                 'ultrasonic_insp': ultrasonic_insp,
                 'alpha': alpha,
+
             }
 
         except Exception as e:
@@ -593,7 +618,7 @@ class App(tk.Tk):
                 'h': True,
             }
             self.mark_entries_state(marks=marks)
-            self.disableChildren(self.frame_create_item_input_alpha)
+            self.disableChildren(self.input_cone_frame)
             self.label_total_k1.configure(state=tk.DISABLED)
             self.label_calc_total_k1.configure(state=tk.DISABLED)
         elif form == ItemFormEnum.SPHERICAL:
@@ -607,7 +632,7 @@ class App(tk.Tk):
             # self.r.set('0')
             # self.h.set('0')
             self.mark_entries_state(marks=marks)
-            self.disableChildren(self.frame_create_item_input_alpha)
+            self.disableChildren(self.input_cone_frame)
             self.label_total_k1.configure(state=tk.DISABLED)
             self.label_calc_total_k1.configure(state=tk.DISABLED)
         elif form == ItemFormEnum.FLAT:
@@ -620,7 +645,7 @@ class App(tk.Tk):
             }
             # self.R.set('1000000')
             self.mark_entries_state(marks=marks)
-            self.disableChildren(self.frame_create_item_input_alpha)
+            self.disableChildren(self.input_cone_frame)
             self.label_total_k1.configure(state=tk.NORMAL)
             self.label_calc_total_k1.configure(state=tk.NORMAL)
 
@@ -633,7 +658,7 @@ class App(tk.Tk):
                 'h': True,
             }
             self.mark_entries_state(marks=marks)
-            self.enableChildren(self.frame_create_item_input_alpha)
+            self.enableChildren(self.input_cone_frame)
             self.label_total_k1.configure(state=tk.DISABLED)
             self.label_calc_total_k1.configure(state=tk.DISABLED)
 
@@ -697,4 +722,3 @@ class App(tk.Tk):
             render.save()
         except Exception as e:
             my_logger.info(f'Не удалось сохранить: {e}')
-

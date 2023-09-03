@@ -13,11 +13,14 @@ my_logger = logging.getLogger('my_logger')
 
 class BaseItem(ABC):
     D = 0
+    Dm = 0
+    d = 0
     R = 0
     r = 0
-    h = 0
     s = 0
-    d = 0
+    h = 0
+    p = 0
+    c1 = 0
     item_steel = ItemSteelEnum.default()
     item_form = ItemFormEnum.default()
     weld = False

@@ -33,8 +33,8 @@ class Drawer(BaseDrawer):
         # self.context.select_font_face("GOST type A", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
         # self.context.select_font_face("GOST type A", cairo.FONT_SLANT_OBLIQUE, cairo.FONT_WEIGHT_NORMAL)
         # self.context.select_font_face("GOST type A", cairo.FONT_SLANT_ITALIC, cairo.FONT_WEIGHT_NORMAL)
-        self.context.select_font_face(FONT, cairo.FONT_SLANT_ITALIC, cairo.FONT_WEIGHT_NORMAL)
-        # self.context.select_font_face(FONT, cairo.FONT_SLANT_OBLIQUE, cairo.FONT_WEIGHT_NORMAL)
+        # self.context.select_font_face(FONT, cairo.FONT_SLANT_ITALIC, cairo.FONT_WEIGHT_NORMAL)
+        self.context.select_font_face(FONT, cairo.FONT_SLANT_OBLIQUE, cairo.FONT_WEIGHT_NORMAL)
         # self.context.select_font_face(FONT, cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
 
     def get_coordinates(self, point):
@@ -251,18 +251,20 @@ class Drawer(BaseDrawer):
         self.context.restore()
         self.context.restore()
 
-    def arrow(self, length, r, angle=(2.5, 1, 0)):
+    def arrow(self, length=2.5, r=1, angle=0.0):
+
         self.context.save()
         self.context.rotate(angle)
         l1 = math.tan(math.radians(10)) * length
         theta = math.asin(l1 / r)
-        l2 = (1 / math.tan(theta)) * l1
+        l2 = 1 / math.tan(theta) * l1
         self.context.move_to(length, l1)
         self.context.line_to(0, 0)
         self.context.line_to(length, -l1)
         self.context.arc_negative(length + l2, 0, r, math.pi + theta, math.pi - theta)
         self.context.fill()
         self.stroke()
+
         self.context.restore()
 
     def radius_dimension(self, center, radius, text, angle, offset=3):
