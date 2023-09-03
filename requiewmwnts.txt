@@ -1,0 +1,4 @@
+pyinstaller>=5.10.1
+pycairo
+#cairocffi
+numpy
