@@ -12,11 +12,11 @@ class LabeledEntryMixin:
         entry.grid(row=row, column=1, **PAD, sticky=tkinter.NSEW)
 
 
-class DFrame(ttk.Frame):
+class DisableMixin(ttk.Widget):
 
     def enable(self, state='!disabled'):
 
-        def cstate(widget):
+        def change_state(widget):
             # Is this widget a container?
             if widget.winfo_children:
                 # It's a container, so iterate through its children
@@ -24,9 +24,9 @@ class DFrame(ttk.Frame):
                     # change its state
                     w.state((state,))
                     # and then recurse to process ITS children
-                    cstate(w)
+                    change_state(w)
 
-        cstate(self)
+        change_state(self)
 
     def disable(self):
         self.enable('disabled')

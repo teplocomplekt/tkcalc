@@ -8,6 +8,7 @@ from utils.settings import PAD
 class ChamferFrame(ttk.Frame):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.parent = parent
 
         self.additional_info_chamfer = tkinter.BooleanVar()
         self.additional_info_chamfer_value = tkinter.IntVar()
@@ -31,7 +32,13 @@ class ChamferFrame(ttk.Frame):
         ).grid(row=0, column=2, **PAD, sticky=tkinter.NSEW)
 
     def chamfer_callback(self):
-        ...
+        state = self.additional_info_chamfer.get()
+        if state:
+            self.parent.cut_frame.additional_info_cut.set(value=True)
+            self.parent.cut_frame.btn.config(state=tkinter.DISABLED)
+        else:
+            self.parent.cut_frame.additional_info_cut.set(value=False)
+            self.parent.cut_frame.btn.config(state=tkinter.NORMAL)
 
 
 class CutFrame(ttk.Frame):

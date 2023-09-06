@@ -1,11 +1,11 @@
 import tkinter
 from tkinter import ttk
 
-from interface.frames.mixins import LabeledEntryMixin
+from interface.frames.mixins import LabeledEntryMixin, DisableMixin
 from utils.settings import PAD
 
 
-class ConeInputFrame(LabeledEntryMixin, ttk.LabelFrame):
+class ConeInputFrame(LabeledEntryMixin, DisableMixin, ttk.LabelFrame):
     def __init__(self, parent=None):
         super().__init__(parent, text='Коническое днище')
 
@@ -24,3 +24,5 @@ class ConeInputFrame(LabeledEntryMixin, ttk.LabelFrame):
         btn90.grid(row=0, column=1, **PAD, sticky=tkinter.NSEW)
 
         self.entry_with_label(parent=self, row=1, text='Dмал', variable=self.Dm)
+
+        self.disable()
