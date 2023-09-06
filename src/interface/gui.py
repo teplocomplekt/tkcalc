@@ -1,9 +1,8 @@
 import logging
 import math
 import re
-import tkinter as tk
+
 from tkinter import ttk
-from tkinter import font
 from interface.widgets.ItemSteelWidget import ItemSteelWidget
 from interface.widgets.ItemFormWidget import ItemFormWidget
 from utils.settings import *

@@ -11,7 +11,8 @@ APP_DESCRIPTION = 'Калькулятор для расчета днищ Теп�
 
 DEFAULT_WIDTH = 110
 
-FONT = 'GOST type A'
+# FONT = 'GOST type A'
+FONT = 'GOST2304 Type A'
 
 A4_PORTRAIT_STAMP = {
     'paths': {
