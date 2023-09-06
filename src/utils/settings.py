@@ -274,10 +274,12 @@ A4_PORTRAIT_STAMP = {
 IPAD = {
     'ipadx': 6,
     'ipady': 6}
+
 PAD = {
     'padx': 4,
     'pady': 2
 }
+
 POSITION = {'anchor': tk.NW} | PAD
 
 GRID_POSITION = {

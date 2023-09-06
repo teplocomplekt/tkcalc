@@ -303,6 +303,7 @@ class App(tk.Tk):
 
     def create_logger(self):
         parent = ttk.Frame()
+
         self.logtext = tk.Text(parent, state="disabled", width=50, height=5)
         self.logtext.pack()
 
