@@ -25,5 +25,7 @@ class App(tk.Frame):
         self.item_steel_frame.grid(row=0, column=1, **PAD, sticky=tk.NSEW)
 
         self.left_frame = LeftFrame(self)
+        self.left_frame.grid(row=1, column=0, sticky=tk.NSEW)
+
         self.right_frame = RightFrame(self)
-        self.right_frame.grid(row=1, column=1, **PAD, sticky=tk.NSEW)
+        self.right_frame.grid(row=1, column=1, sticky=tk.NSEW)
