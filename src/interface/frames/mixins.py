@@ -10,6 +10,7 @@ class LabeledEntryMixin:
         ttk.Label(parent, text=text).grid(row=row, column=0, **PAD, sticky=tkinter.W)
         entry = ttk.Entry(parent, textvariable=variable, width=8)
         entry.grid(row=row, column=1, **PAD, sticky=tkinter.NSEW)
+        return entry
 
 
 class DisableMixin(ttk.Widget):

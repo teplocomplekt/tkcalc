@@ -7,12 +7,15 @@ from utils.logger import MyHandlerText
 my_logger = logging.getLogger('my_logger')
 
 
-class LogFrame(ttk.Frame):
+class LogFrame(tkinter.Frame):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.config(background='pink')
+        self.grid_columnconfigure(0, weight=1)
 
         self.logtext = tkinter.Text(self, state="disabled", width=50, height=5)
-        self.logtext.pack()
+        # self.logtext.pack()
+        self.logtext.grid(sticky=tkinter.NSEW)
 
         stderrHandler = logging.StreamHandler()  # no arguments => stderr
         my_logger.addHandler(stderrHandler)
