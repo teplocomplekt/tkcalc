@@ -1,6 +1,6 @@
 import logging
 import math
-from items.base_item import BaseItem
+from items_old.base_item import BaseItem
 from utils.settings import S_MIN, S_MAX
 
 my_logger = logging.getLogger('my_logger')

@@ -1,6 +1,6 @@
 #!/bin/env python3
 
-from interface.gui_new import App
+from interface.gui import App
 # from interface.gui import App
 import tkinter as tk
 

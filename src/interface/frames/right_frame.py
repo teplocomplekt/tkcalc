@@ -9,6 +9,7 @@ from utils.settings import PAD
 class RightFrame(ttk.Frame):
     def __init__(self, parent=None):
         super().__init__(parent)
+        self.parent = parent
         self.grid_columnconfigure(0, weight=1)
 
         self.input_data_frame = InputDataFrame(self)

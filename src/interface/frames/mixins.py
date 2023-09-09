@@ -6,7 +6,8 @@ from utils.settings import PAD
 
 class LabeledEntryMixin:
 
-    def entry_with_label(self, *, parent, row, text, variable):
+    @staticmethod
+    def entry_with_label(*, parent, row, text, variable):
         ttk.Label(parent, text=text).grid(row=row, column=0, **PAD, sticky=tkinter.W)
         entry = ttk.Entry(parent, textvariable=variable, width=8)
         entry.grid(row=row, column=1, **PAD, sticky=tkinter.NSEW)

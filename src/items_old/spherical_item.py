@@ -1,7 +1,7 @@
 
 import math
-from items.base_item import BaseItem, my_logger
-from items.base_thorspherical_item import BaseThorSphericalItem
+from items_old.base_item import BaseItem, my_logger
+from items_old.base_thorspherical_item import BaseThorSphericalItem
 from render.drawer import CENTER_POINT
 from render.utils import LineWidth, Color
 
@@ -96,10 +96,10 @@ class SphericalItem(BaseThorSphericalItem):
         # drawer.dimension_diameter(L1, R1, f'{self.D}±2', 10)  # ⌀
 
         # Размер s
-        drawer.dimension_thiknes(
+        drawer.dimension_thickness(
             center=A0,
             radius=self.R / self.scale,
-            thiknes=self.s / self.scale,
+            thickness=self.s / self.scale,
             text=f'{self.s}*',
             angle=((math.pi / 2 - self._angle - self._angle1) * 2 / 3 + self._angle),
             offset=5

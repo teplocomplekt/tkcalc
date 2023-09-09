@@ -1,4 +1,6 @@
 import logging
+import tkinter
+
 
 # this item "module_logger" is visible only in this module,
 # (but you can create references to the same logger object from other modules
@@ -18,5 +20,6 @@ class MyHandlerText(logging.StreamHandler):
         msg = self.format(record)
         self.textctrl.config(state="normal")
         self.textctrl.insert("end", msg + "\n")
+        self.textctrl.see(tkinter.END)
         self.flush()
         self.textctrl.config(state="disabled")

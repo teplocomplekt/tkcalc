@@ -288,7 +288,7 @@ class Drawer(BaseDrawer):
 
         self.context.restore()
 
-    def dimension_thiknes(self, center, radius, thiknes, text, angle, offset=3):
+    def dimension_thickness(self, center, radius, thickness, text, angle, offset=3):
 
         text_padding = 2
         arrow_length = 2.5
@@ -304,13 +304,13 @@ class Drawer(BaseDrawer):
         self.context.rotate(angle)
         self.context.translate(-radius, 0)
         self.arrow()
-        width, height = self.text(text, 7, (-text_padding - offset - thiknes, 1), 'right')
-        self.line((arrow_padding, 0), (-text_padding * 2 - offset - thiknes - width, 0))
+        width, height = self.text(text, 7, (-text_padding - offset - thickness, 1), 'right')
+        self.line((arrow_padding, 0), (-text_padding * 2 - offset - thickness - width, 0))
         # self.stroke()
         # self.context.translate(-thiknes, 0)
         # self.arrow(angle=math.pi)
         self.stroke()
-        self.context.translate(-thiknes, 0)
+        self.context.translate(-thickness, 0)
         self.arrow(angle=math.pi)
 
         self.context.restore()
