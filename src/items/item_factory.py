@@ -1,4 +1,7 @@
-from items.abstract_item import ItemInputDataDTO, SphericalItem, FlatItem, ConeItem
+from items.abstract_item import ItemInputDataDTO
+from items.cone_item import ConeItem
+from items.flat_item import FlatItem
+from items.spherical_item import SphericalItem
 from items.thor_spherical_item import ThorSphericalItem
 from utils.enums import ItemFormEnum
 

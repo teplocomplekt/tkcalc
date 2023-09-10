@@ -36,6 +36,18 @@ class ThorSphericalItem(AbstractItem):
         # Давление
         return pressure
 
+    @property
+    def get_k(self):
+        # Расчетная толщина стенки обечайки [мм]
+        # sр = p * R / (2 * φ * [σ] - 0.5 * p)
+        sp = self.data.p * self._get_R / (2 * self._get_f * self._get_q - 0.5 * self.data.p)
+
+        # Расчетная толщина обечайки с учетом прибавок
+        # sр + c = 3.25 + 1.5 = 4.75
+        # Коэффициент запаса прочности днища
+        k = self.data.s / (sp + self._get_c)
+        return k
+
     def draw(self):
         ...
 
@@ -52,14 +64,4 @@ class ThorSphericalItem(AbstractItem):
         )
         return spherical_height
 
-    @property
-    def get_k(self):
-        # Расчетная толщина стенки обечайки [мм]
-        # sр = p * R / (2 * φ * [σ] - 0.5 * p)
-        sp = self.data.p * self._get_R / (2 * self._get_f * self._get_q - 0.5 * self.data.p)
 
-        # Расчетная толщина обечайки с учетом прибавок
-        # sр + c = 3.25 + 1.5 = 4.75
-        # Коэффициент запаса прочности днища
-        k = self.data.s / (sp + self._get_c)
-        return k

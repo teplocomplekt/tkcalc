@@ -11,12 +11,15 @@ class ItemInputDataDTO:
     item_form: ItemFormEnum
     item_steel: ItemSteelEnum
     D: int
+    d: int
+    Dm: int
+    alpha: float
     R: int
     r: int
     h: int
     s: int
-    p: int
-    c1: int
+    p: float
+    c1: float
 
 
 class AbstractItem:
@@ -24,7 +27,6 @@ class AbstractItem:
         self.data = data
         self.c2 = 0
         self.c3 = 1
-        self._title_template = []
 
     @property
     def scale(self):
@@ -106,19 +108,6 @@ class AbstractItem:
         c = c1 + c2 + c3
         return c
 
-
-class SphericalItem(AbstractItem):
-    def draw(self):
-        ...
-
-
-class FlatItem(AbstractItem):
-    def draw(self):
-        ...
-
-
-class ConeItem(AbstractItem):
-    def draw(self):
-        ...
-
-
+    @property
+    def _title_template(self):
+        raise NotImplementedError()
