@@ -287,6 +287,7 @@ GRID_POSITION = {
                     'column': 0,
                     'columnspan': 1,
                     'sticky': tk.NSEW} | PAD | IPAD
+
 STEEL_3 = 'Ст3'
 STEEL_AISI_409 = 'AiSi 409'
 STEEL_09G2C = '09Г2С'
@@ -294,6 +295,17 @@ STEEL_AISI_304 = 'AiSi 304'
 STEEL_BT_1 = 'ВТ-1'
 STEEL_AISI_321 = 'AiSi 321'
 STEEL_AISI_316 = 'AiSi 316'
+
+Q = {
+    STEEL_BT_1: 143,
+    STEEL_AISI_409: 159,
+    STEEL_AISI_316: 179,
+    STEEL_AISI_321: 179,
+    STEEL_AISI_304: 170,
+    STEEL_09G2C: 195,
+    STEEL_3: 154
+}
+
 
 S_MIN = {
     '300': {'r_30': 3, 'r_50': 3, 'r_60': 3, 'r_75': 0, 'r_80': 0, 'r_100': 0, 'r_120': 0, 'r_150': 0, 'r_180': 0,

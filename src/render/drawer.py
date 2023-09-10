@@ -3,8 +3,7 @@ from abc import ABC
 
 import cairo
 
-from render.render import Render
-from render.utils import LineWidth, Color
+from render.render import BaseRender
 
 import numpy as np
 
@@ -18,18 +17,29 @@ class BaseDrawer(ABC):
 
 
 class Drawer(BaseDrawer):
-    def __init__(self=None, render=None):
+
+    class LineWidth:
+        BOLD = 1
+        MEDIUM = 0.6
+        THIN = 0.18
+
+    class Color:
+        BLACK = (0.0, 0.0, 0.0)
+        WHITE = (1.0, 1.0, 1.0)
+        CUSTOM = (0.9, 0.9, 0.8)
+
+    def __init__(self, render: BaseRender):
         self.render = render
         self.context = render.context
         self.context.translate(0, -297)
 
         # Фон
-        self.context.set_source_rgb(*Color.WHITE)
+        self.context.set_source_rgb(*Drawer.Color.WHITE)
         self.context.rectangle(0, 0, 210, 297)
         self.context.fill()
 
         # Задаем стиль линии
-        self.set_line_style(LineWidth.MEDIUM, Color.BLACK)
+        self.set_line_style(Drawer.LineWidth.MEDIUM, Drawer.Color.BLACK)
         # self.context.select_font_face("GOST type A", cairo.FONT_SLANT_NORMAL, cairo.FONT_WEIGHT_NORMAL)
         # self.context.select_font_face("GOST type A", cairo.FONT_SLANT_OBLIQUE, cairo.FONT_WEIGHT_NORMAL)
         # self.context.select_font_face("GOST type A", cairo.FONT_SLANT_ITALIC, cairo.FONT_WEIGHT_NORMAL)
@@ -126,7 +136,7 @@ class Drawer(BaseDrawer):
         self.context.translate(*point1)
         self.context.rotate(angle)
 
-        self.set_line_style(LineWidth.THIN, Color.BLACK)
+        self.set_line_style(Drawer.LineWidth.THIN, Drawer.Color.BLACK)
 
         # Рисуем стрелки
         self.context.save()
@@ -200,7 +210,7 @@ class Drawer(BaseDrawer):
         self.context.translate(*point1)
         self.context.rotate(angle)
 
-        self.set_line_style(LineWidth.THIN, Color.BLACK)
+        self.set_line_style(Drawer.LineWidth.THIN, Drawer.Color.BLACK)
 
         # Рисуем стрелки
         self.context.save()
@@ -295,7 +305,7 @@ class Drawer(BaseDrawer):
         arrow_padding = arrow_length + 1
 
         self.context.save()
-        self.set_line_style(LineWidth.THIN, Color.BLACK)
+        self.set_line_style(Drawer.LineWidth.THIN, Drawer.Color.BLACK)
         self.context.translate(*center)
         # Центр
         # self.line((-1, 0), (1, 0))
@@ -317,7 +327,7 @@ class Drawer(BaseDrawer):
 
     def dimension_angle(self, center, radius, angle1, angle2, text):
         self.context.save()
-        self.set_line_style(LineWidth.THIN, Color.BLACK)
+        self.set_line_style(Drawer.LineWidth.THIN, Drawer.Color.BLACK)
         self.context.translate(*center)
 
         self.arc_negative(0, 0, radius, angle1, angle2)
@@ -341,3 +351,5 @@ class Drawer(BaseDrawer):
         self.stroke()
 
         self.context.restore()
+
+

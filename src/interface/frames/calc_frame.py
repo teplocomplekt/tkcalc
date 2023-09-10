@@ -35,8 +35,8 @@ class CalcValueFrame(ttk.Frame):
         self.calc_total_diameter = tkinter.StringVar()
         self.calc_total_weight = tkinter.StringVar()
         self.calc_total_pressure = tkinter.StringVar()
-        self.calc_total_k = tkinter.DoubleVar()
-        self.calc_total_k1 = tkinter.DoubleVar()
+        self.calc_total_k = tkinter.StringVar()
+        self.calc_total_k1 = tkinter.StringVar()
 
         ttk.Label(self, textvariable=self.calc_total_height) \
             .grid(row=0, column=0, **PAD, sticky=tkinter.NSEW)

@@ -1,8 +1,11 @@
 import logging
+import math
 import tkinter
 from tkinter import ttk
 
-from items.item import ItemFactory
+from items.abstract_item import ItemInputDataDTO
+from items.item_factory import ItemFactory
+from utils.enums import ItemFormEnum
 from utils.settings import PAD
 
 my_logger = logging.getLogger('my_logger')
@@ -31,8 +34,50 @@ class ActionButtonsFrame(ttk.Frame):
 
     def manual_calc_callback(self):
         my_logger.info('manual_calc_callback')
-        self.item = ItemFactory.build_item(self.parent.parent.item_form_frame.variable.get())
+        data = ItemInputDataDTO(
+            item_form=self.parent.parent.item_form_frame.variable.get(),
+            item_steel=self.parent.parent.item_steel_frame.variable.get(),
+            D=self.parent.parent.right_frame.input_data_frame.D.get(),
+            R=self.parent.parent.right_frame.input_data_frame.R.get(),
+            r=self.parent.parent.right_frame.input_data_frame.r.get(),
+            h=self.parent.parent.right_frame.input_data_frame.h.get(),
+            s=self.parent.parent.right_frame.input_data_frame.s.get(),
+            p=self.parent.parent.right_frame.input_data_frame.p.get(),
+            c1=self.parent.parent.right_frame.input_data_frame.c1.get(),
+        )
+        self._clear_calc_values()
+        self.item = ItemFactory.build(data)
+        self._set_calc_values(self.item)
 
     def save_pdf_callback(self):
         my_logger.info('save_pdf_callback')
         self.manual_calc_callback()
+
+    def _clear_calc_values(self):
+        self.parent.parent.calc_value_frame.calc_total_height.set('')
+        self.parent.parent.calc_value_frame.calc_total_diameter.set('')
+        self.parent.parent.calc_value_frame.calc_total_weight.set('')
+        self.parent.parent.calc_value_frame.calc_total_pressure.set('')
+        self.parent.parent.calc_value_frame.calc_total_k.set('')
+        self.parent.parent.calc_value_frame.calc_total_k1.set('')
+
+    def _set_calc_values(self, item):
+        try:
+            calc_total_height = '%s мм' % round(item.get_total_height)
+            calc_total_diameter = '%s мм' % round(item.get_total_diameter)
+            calc_total_weight = '%s кг' % math.ceil(item.get_total_weight)
+            calc_total_pressure = '{:.6f} МПа'.format(item.get_total_pressure)
+            calc_total_k = '{:.2f}'.format(item.get_k)
+
+            self.parent.parent.calc_value_frame.calc_total_height.set(calc_total_height)
+            self.parent.parent.calc_value_frame.calc_total_diameter.set(calc_total_diameter)
+            self.parent.parent.calc_value_frame.calc_total_weight.set(calc_total_weight)
+            self.parent.parent.calc_value_frame.calc_total_pressure.set(calc_total_pressure)
+            self.parent.parent.calc_value_frame.calc_total_k.set(calc_total_k)
+
+            if item.data.item_form == ItemFormEnum.FLAT:
+                calc_total_k1 = '{:.2f}'.format(item.get_k1)
+                self.parent.parent.calc_value_frame.calc_total_k1.set(calc_total_k1)
+
+        except Exception as e:
+            my_logger.info(f'Не удалось посчитать: {e}')

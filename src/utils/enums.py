@@ -16,12 +16,12 @@ class ItemFormEnum(str, Enum):
 
 class ItemSteelEnum(str, Enum):
     STEEL_3 = STEEL_3
-    STEEL_AISI_409 = 'AiSi 409'
-    STEEL_09G2C = '09Г2С'
-    STEEL_AISI_304 = 'AiSi 304'
-    STEEL_BT_1 = 'ВТ-1'
-    STEEL_AISI_321 = 'AiSi 321'
-    STEEL_AISI_316 = 'AiSi 316'
+    STEEL_AISI_409 = STEEL_AISI_409
+    STEEL_09G2C = STEEL_09G2C
+    STEEL_AISI_304 = STEEL_AISI_304
+    STEEL_BT_1 = STEEL_BT_1
+    STEEL_AISI_321 = STEEL_AISI_321
+    STEEL_AISI_316 = STEEL_AISI_316
 
     @staticmethod
     def default():

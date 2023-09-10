@@ -1,7 +1,6 @@
 import math
 from items_old.base_item import BaseItem, my_logger
-from render.drawer import CENTER_POINT
-from render.utils import LineWidth, Color
+from render.drawer import CENTER_POINT, LineWidth, Color
 from utils.settings import CONE_VALUES
 
 

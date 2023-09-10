@@ -4,7 +4,8 @@ import cairo
 from tkinter import filedialog
 import logging
 from utils.settings import *
-from render.utils import MM2PT, PaperSize, LineWidth
+from render.utils import MM2PT, PaperSize
+# from render.drawer import Drawer
 
 my_logger = logging.getLogger('my_logger')
 
@@ -19,13 +20,14 @@ class BaseRender(ABC):
 
     def draw_stamp(self):
         # Фон
-        self.context.set_source_rgb(0.9, 0.9, 0.5)
-        self.context.rectangle(0, 0, 210, 297)
-        self.context.fill()
+        # self.context.set_source_rgb(0.9, 0.9, 0.5)
+        # self.context.rectangle(0, 0, 210, 297)
+        # self.context.fill()
 
         # Задаем стиль линии
-        self.context.set_source_rgb(0.0, 0.0, 0.0)
-        self.context.set_line_width(LineWidth.MEDIUM)
+        # self.context.set_source_rgb(0.0, 0.0, 0.0)
+        # self.context.set_line_width(Drawer.LineWidth.MEDIUM)
+        ...
 
     def save(self):
         my_logger.info('Сохранен PDF')

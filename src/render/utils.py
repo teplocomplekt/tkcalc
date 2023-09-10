@@ -9,16 +9,3 @@ class PaperSize:
     @staticmethod
     def get_paper_in_pt(size: tuple):
         return map((lambda x: x * MM2PT), size)
-
-
-class LineWidth:
-    BOLD = 1
-    MEDIUM = 0.6
-    THIN = 0.18
-
-
-class Color:
-    BLACK = (0.0, 0.0, 0.0)
-    WHITE = (1.0, 1.0, 1.0)
-    CUSTOM = (0.9, 0.9, 0.8)
-
