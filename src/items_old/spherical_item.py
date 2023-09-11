@@ -2,7 +2,7 @@
 import math
 from items_old.base_item import BaseItem, my_logger
 from items_old.base_thorspherical_item import BaseThorSphericalItem
-from render.drawer import CENTER_POINT, LineWidth, Color
+from render_old.drawer import CENTER_POINT, LineWidth, Color
 
 
 class SphericalItem(BaseThorSphericalItem):

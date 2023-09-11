@@ -31,7 +31,7 @@ class SphericalItem(ThorSphericalItem):
     # def get_k(self):
     #     pass
 
-    def draw(self):
+    def draw(self, drawer):
         ...
 
     @property

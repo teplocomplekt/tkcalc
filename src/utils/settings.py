@@ -10,6 +10,7 @@ APP_TITLE = f'''Калькулятор Теплокомплект v.{VERSION}'''
 APP_DESCRIPTION = 'Калькулятор для расчета днищ Теплокомплект'
 
 DEFAULT_WIDTH = 110
+CENTER_POINT = (112.5, 176)
 
 # FONT = 'GOST type A'
 FONT = 'GOST2304 Type A'
@@ -500,3 +501,4 @@ S_MAX = {
 }
 
 CONE_VALUES = {}
+

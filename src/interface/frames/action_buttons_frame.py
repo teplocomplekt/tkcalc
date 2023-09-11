@@ -5,6 +5,9 @@ from tkinter import ttk
 
 from items.abstract_item import ItemInputDataDTO
 from items.item_factory import ItemFactory
+from renderer.drawer import Drawer
+from renderer.render import RenderFactory, RenderTypeEnum
+from renderer.utils import PaperSize
 from utils.enums import ItemFormEnum
 from utils.settings import PAD
 
@@ -47,6 +50,12 @@ class ActionButtonsFrame(ttk.Frame):
             s=self.parent.parent.right_frame.input_data_frame.s.get(),
             p=self.parent.parent.right_frame.input_data_frame.p.get(),
             c1=self.parent.parent.right_frame.input_data_frame.c1.get(),
+            chamfer=self.parent.parent.left_frame.additional_info_frame.chamfer.chamfer.get(),
+            chamfer_value=self.parent.parent.left_frame.additional_info_frame.chamfer.chamfer_value.get(),
+            cut=self.parent.parent.left_frame.additional_info_frame.cut_frame.cut.get(),
+            weld=self.parent.parent.left_frame.hole_weld_frame.hole_weld.get(),
+            defects=self.parent.parent.left_frame.additional_info_frame.defects_frame.defects.get(),
+            ultrasonic=self.parent.parent.left_frame.additional_info_frame.ultrasonic_frame.ultrasonic.get()
         )
         self._clear_calc_values()
         self.item = ItemFactory.build(data)
@@ -55,6 +64,11 @@ class ActionButtonsFrame(ttk.Frame):
     def save_pdf_callback(self):
         my_logger.info('save_pdf_callback')
         self.manual_calc_callback()
+        render = RenderFactory.build(RenderTypeEnum.PDF)(self.item.title, PaperSize.A4_PORTRAIT)
+        drawer = Drawer(render)
+        self.item.draw_stamp(drawer)
+        self.item.draw(drawer)
+        render.save()
 
     def _clear_calc_values(self):
         self.parent.parent.calc_value_frame.calc_total_height.set('')
@@ -66,21 +80,21 @@ class ActionButtonsFrame(ttk.Frame):
 
     def _set_calc_values(self, item):
         # try:
-            calc_total_height = '%s мм' % round(item.get_total_height)
-            calc_total_diameter = '%s мм' % round(item.get_total_diameter)
-            calc_total_weight = '%s кг' % math.ceil(item.get_total_weight)
-            calc_total_pressure = '{:.6f} МПа'.format(item.get_total_pressure)
-            calc_total_k = '{:.2f}'.format(item.get_k)
+        calc_total_height = '%s мм' % round(item.get_total_height)
+        calc_total_diameter = '%s мм' % round(item.get_total_diameter)
+        calc_total_weight = '%s кг' % math.ceil(item.get_total_weight)
+        calc_total_pressure = '{:.6f} МПа'.format(item.get_total_pressure)
+        calc_total_k = '{:.2f}'.format(item.get_k)
 
-            self.parent.parent.calc_value_frame.calc_total_height.set(calc_total_height)
-            self.parent.parent.calc_value_frame.calc_total_diameter.set(calc_total_diameter)
-            self.parent.parent.calc_value_frame.calc_total_weight.set(calc_total_weight)
-            self.parent.parent.calc_value_frame.calc_total_pressure.set(calc_total_pressure)
-            self.parent.parent.calc_value_frame.calc_total_k.set(calc_total_k)
+        self.parent.parent.calc_value_frame.calc_total_height.set(calc_total_height)
+        self.parent.parent.calc_value_frame.calc_total_diameter.set(calc_total_diameter)
+        self.parent.parent.calc_value_frame.calc_total_weight.set(calc_total_weight)
+        self.parent.parent.calc_value_frame.calc_total_pressure.set(calc_total_pressure)
+        self.parent.parent.calc_value_frame.calc_total_k.set(calc_total_k)
 
-            if item.data.item_form == ItemFormEnum.FLAT:
-                calc_total_k1 = '{:.2f}'.format(item.get_k1)
-                self.parent.parent.calc_value_frame.calc_total_k1.set(calc_total_k1)
+        if item.data.item_form == ItemFormEnum.FLAT:
+            calc_total_k1 = '{:.2f}'.format(item.get_k1)
+            self.parent.parent.calc_value_frame.calc_total_k1.set(calc_total_k1)
 
-        # except Exception as e:
-        #     my_logger.info(f'Не удалось посчитать: {e}')
+    # except Exception as e:
+    #     my_logger.info(f'Не удалось посчитать: {e}')

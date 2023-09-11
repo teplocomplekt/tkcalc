@@ -2,8 +2,9 @@ import dataclasses
 import math
 from abc import abstractmethod
 
+from renderer.utils import LineWidth, Color
 from utils.enums import ItemFormEnum, ItemSteelEnum
-from utils.settings import Q, DEFAULT_WIDTH
+from utils.settings import Q, DEFAULT_WIDTH, A4_PORTRAIT_STAMP
 
 
 @dataclasses.dataclass
@@ -20,6 +21,12 @@ class ItemInputDataDTO:
     s: int
     p: float
     c1: float
+    chamfer: bool
+    chamfer_value: int
+    cut: bool
+    weld: bool
+    defects: bool
+    ultrasonic: bool
 
 
 class AbstractItem:
@@ -63,8 +70,77 @@ class AbstractItem:
         return 0
 
     @abstractmethod
-    def draw(self):
+    def draw(self, drawer):
         raise NotImplementedError()
+
+    def draw_stamp(self, drawer):
+        drawer.set_line_style(LineWidth.MEDIUM, Color.BLACK)
+        paths = A4_PORTRAIT_STAMP['paths']['medium']
+        for path in paths:
+            drawer.poly_line(path)
+
+        drawer.stroke()
+
+        drawer.set_line_style(LineWidth.THIN, Color.BLACK)
+        paths = A4_PORTRAIT_STAMP['paths']['thin']
+        for path in paths:
+            drawer.poly_line(path)
+        drawer.stroke()
+
+        static_text = A4_PORTRAIT_STAMP['static_text']
+        for text in static_text:
+            drawer.text(text['title'], text['size'], text['coordinates'])
+
+        static_text_title = A4_PORTRAIT_STAMP['static_text_title']
+        for text in static_text_title:
+            drawer.text(text['title'], text['size'], text['coordinates'])
+
+        static_text_90 = A4_PORTRAIT_STAMP['static_text_90']
+        for text in static_text_90:
+            drawer.text(text['title'], text['size'], text['coordinates'], angle=-math.pi / 2)
+
+        # Масса
+        drawer.text(f'{math.ceil(self.get_total_weight)}', 7, (177.5, 29.966679), align='center')
+        # Масштаб
+        drawer.text(f'1:{self.scale}', 7, (195, 29.966679), align='center')
+
+        # form = self.item_form.split('/')[0]
+
+        # drawer.text('Разраб.', 5, (20.5, 30.726673))
+        # title = f'Чертеж №___ {date.today().strftime("%Y.%m.%d")}'
+        title = f'{self.title}'
+        drawer.text(title, 10, (145, 48.953348), align='center')
+        drawer.text(title, 7, (55, 287.5), align='center', angle=math.pi, scale=0.87)
+        drawer.text(f'Днище', 15, (120, 28.466675), align='center')
+        drawer.text(f'Сталь {self.data.item_steel}', 10, (120, 8.953346), align='center')
+        drawer.text(f'Теплокомплект', 10, (180 - 5 / 4, 8.953346), align='center', scale=0.87)
+
+        additional = []
+
+        if self.data.chamfer:
+            additional.append(f'''С фаской {self.data.chamfer_value} мм.''')
+        else:
+            additional.append('Без фаски.')
+        if self.data.cut:
+            additional.append('Торцовка/Подрезка.')
+
+        if self.data.weld:
+            additional.append('Заварка технологического отверстия.')
+        else:
+            additional.append('Без заварки технологического отверстия.')
+
+        if self.data.defects:
+            additional.append('Дефектоскопия.')
+
+        if self.data.ultrasonic:
+            additional.append('УЗК сварных швов.')
+
+        additional.append('Без Термообработки.')
+
+        additional.append('* - размеры для справок.')
+
+        for i, text in enumerate(additional):
+            drawer.text(f'{i + 1}. {text}', 7, (25, 60 + (len(additional) - i) * 7), align='left')
 
     @property
     def title(self):

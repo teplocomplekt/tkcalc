@@ -33,7 +33,7 @@ class FlatItem(ThorSphericalItem):
         k1 = self.data.s / (s1p + self._get_c)
         return k1
 
-    def draw(self):
+    def draw(self, drawer):
         ...
 
     @property

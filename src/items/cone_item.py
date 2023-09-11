@@ -70,7 +70,7 @@ class ConeItem(AbstractItem):
         k = self.data.s / (sp + self._get_c)
         return k
 
-    def draw(self):
+    def draw(self, drawer):
         ...
 
     @property

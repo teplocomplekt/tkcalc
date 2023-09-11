@@ -5,7 +5,7 @@ from tkinter import filedialog
 import logging
 from utils.settings import *
 from render.utils import MM2PT, PaperSize
-# from render.drawer import Drawer
+# from render_old.drawer import Drawer
 
 my_logger = logging.getLogger('my_logger')
 

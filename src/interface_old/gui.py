@@ -12,8 +12,8 @@ from items_old.flat_item import FlatItem
 from items_old.spherical_item import SphericalItem
 from items_old.thor_spherical_item import ThorSphericalItem
 from utils.logger import MyHandlerText
-from render.drawer import Drawer
-from render.render import Render
+from render_old.drawer import Drawer
+from render_old.render import Render
 from utils.settings import GRID_POSITION, PAD
 
 my_logger = logging.getLogger('my_logger')
@@ -713,7 +713,7 @@ class App(tk.Tk):
 
         try:
             title = item.title
-            # render = Render.get_render('SVG')
+            # render_old = Render.get_render('SVG')
             render = Render.get_render('PDF', title)
             drawer = Drawer(render)
             item.draw_stamp(drawer)

@@ -2,7 +2,7 @@ import logging
 import math
 from abc import ABC, abstractmethod
 
-from render.drawer import Drawer, LineWidth, Color
+from render_old.drawer import Drawer, LineWidth, Color
 
 from utils.enums import ItemSteelEnum, ItemFormEnum
 from utils.settings import *
