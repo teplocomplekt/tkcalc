@@ -1,11 +1,12 @@
 import tkinter
 from tkinter import ttk
 
+from interface.frames.mixins import DisableMixin
 from utils.enums import ItemHoleWeldEnum
 from utils.settings import PAD
 
 
-class HoleWeldFrame(ttk.LabelFrame):
+class HoleWeldFrame(DisableMixin, ttk.LabelFrame):
     def __init__(self, parent=None):
         super().__init__(parent, text='Технологическое отверстие')
 

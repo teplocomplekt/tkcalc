@@ -31,6 +31,7 @@ class ItemFormFrame(ttk.LabelFrame):
         form = self.variable.get()
         if form == ItemFormEnum.THORSPHERICAL:
             self.parent.left_frame.cone_input_frame.disable()
+            self.parent.left_frame.hole_weld_frame.enable()
             marks = {
                 'D': True,
                 'R': True,
@@ -46,6 +47,7 @@ class ItemFormFrame(ttk.LabelFrame):
             # self.label_calc_total_k1.configure(state=tk.DISABLED)
         elif form == ItemFormEnum.SPHERICAL:
             self.parent.left_frame.cone_input_frame.disable()
+            self.parent.left_frame.hole_weld_frame.enable()
             marks = {
                 'D': True,
                 'R': True,
@@ -71,6 +73,7 @@ class ItemFormFrame(ttk.LabelFrame):
         # self.label_calc_total_k1.configure(state=tk.DISABLED)
         elif form == ItemFormEnum.FLAT:
             self.parent.left_frame.cone_input_frame.disable()
+            self.parent.left_frame.hole_weld_frame.enable()
             marks = {
                 'D': True,
                 'R': False,
@@ -96,6 +99,7 @@ class ItemFormFrame(ttk.LabelFrame):
 
         elif form == ItemFormEnum.CONE:
             self.parent.left_frame.cone_input_frame.enable()
+            self.parent.left_frame.hole_weld_frame.disable()
             marks = {
                 'D': True,
                 'R': False,

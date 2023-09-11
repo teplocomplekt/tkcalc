@@ -65,7 +65,7 @@ class ActionButtonsFrame(ttk.Frame):
         self.parent.parent.calc_value_frame.calc_total_k1.set('')
 
     def _set_calc_values(self, item):
-        try:
+        # try:
             calc_total_height = '%s мм' % round(item.get_total_height)
             calc_total_diameter = '%s мм' % round(item.get_total_diameter)
             calc_total_weight = '%s кг' % math.ceil(item.get_total_weight)
@@ -82,5 +82,5 @@ class ActionButtonsFrame(ttk.Frame):
                 calc_total_k1 = '{:.2f}'.format(item.get_k1)
                 self.parent.parent.calc_value_frame.calc_total_k1.set(calc_total_k1)
 
-        except Exception as e:
-            my_logger.info(f'Не удалось посчитать: {e}')
+        # except Exception as e:
+        #     my_logger.info(f'Не удалось посчитать: {e}')

@@ -11,7 +11,7 @@ class ChamferFrame(ttk.Frame):
         self.parent = parent
 
         self.additional_info_chamfer = tkinter.BooleanVar()
-        self.additional_info_chamfer_value = tkinter.IntVar()
+        self.additional_info_chamfer_value = tkinter.IntVar(value=45)
 
         ttk.Checkbutton(
             self,

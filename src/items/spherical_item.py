@@ -1,7 +1,13 @@
+from items.abstract_item import ItemInputDataDTO
 from items.thor_spherical_item import ThorSphericalItem
 
 
 class SphericalItem(ThorSphericalItem):
+
+    def __init__(self, data: ItemInputDataDTO):
+        super().__init__(data=data)
+        self.data.r = 0
+        self.data.h = 0
 
     # @property
     # def get_total_height(self):
@@ -39,3 +45,13 @@ class SphericalItem(ThorSphericalItem):
         # Суммарная прибавка к толщине стенки обечайки [мм]
         c = c1 + c2 + c3
         return c
+
+    @property
+    def _title_template(self):
+        return [
+            self.data.D,
+            self.data.R,
+            # self.r,
+            # self.h,
+            self.data.s,
+        ]
