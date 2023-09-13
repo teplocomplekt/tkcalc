@@ -10,7 +10,7 @@ class ConeInputFrame(LabeledEntryMixin, DisableMixin, ttk.LabelFrame):
         super().__init__(parent, text='Коническое днище')
 
         self.alpha = tkinter.IntVar(value=90)
-        self.Dm = tkinter.IntVar()
+        self.Dm = tkinter.IntVar(value=500)
 
         ttk.Label(self, text='Угол α °').grid(row=0, column=0, **PAD, sticky=tkinter.NSEW)
 

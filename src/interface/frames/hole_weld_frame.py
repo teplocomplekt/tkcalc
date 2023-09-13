@@ -14,13 +14,10 @@ class HoleWeldFrame(DisableMixin, ttk.LabelFrame):
     def hole_weld_callback(self):
         if self.hole_weld.get() == ItemHoleWeldEnum.WELD:
             self.d.set(value=0)
-            my_logger.info('d = 0')
         elif self.hole_weld.get() == ItemHoleWeldEnum.HOLE_21:
             self.d.set(value=21)
-            print('d = 21')
         elif self.hole_weld.get() == ItemHoleWeldEnum.HOLE_41:
             self.d.set(value=41)
-            print('d = 41')
         elif self.hole_weld.get() == ItemHoleWeldEnum.CUSTOM:
             self.entry_d.delete(0, tkinter.END)
             self.entry_d.focus_set()
@@ -33,7 +30,7 @@ class HoleWeldFrame(DisableMixin, ttk.LabelFrame):
         self.hole_weld = tkinter.StringVar(value=ItemHoleWeldEnum.default())
         self.d = tkinter.IntVar()
 
-        self.d.set(value=21)
+        self.d.set(value=100)
 
         btn_weld = ttk.Radiobutton(
             self,
@@ -76,5 +73,7 @@ class HoleWeldFrame(DisableMixin, ttk.LabelFrame):
 
         label_d = ttk.Label(self, text='мм')
         label_d.grid(row=3, column=2, **PAD, sticky=tkinter.NSEW)
+
+        self.hole_weld_callback()
 
 

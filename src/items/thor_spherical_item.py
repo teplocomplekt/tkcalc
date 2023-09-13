@@ -81,7 +81,8 @@ class ThorSphericalItem(AbstractItem):
     @property
     def _title_template(self):
         return [
-            self.data.D,
+            # self.data.D,
+            self._id,
             self.data.R,
             self.data.r,
             self.data.h,
@@ -248,7 +249,6 @@ class ThorSphericalItem(AbstractItem):
               ][
                   f'r_{self._get_optimal(self.data.r, r_array)}'
               ] / coef
-
         max = S_MAX[
                   self._get_optimal(self._id, list(S_MAX.keys()))
               ][

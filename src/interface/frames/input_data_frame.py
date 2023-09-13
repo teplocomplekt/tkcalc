@@ -9,11 +9,11 @@ class InputDataFrame(LabeledEntryMixin, ttk.Frame):
         super().__init__(parent)
         self.grid_columnconfigure(1, weight=1)
 
-        self.D = tkinter.IntVar(value=2220)
-        self.R = tkinter.IntVar(value=1800)
-        self.r = tkinter.IntVar(value=300)
-        self.h = tkinter.IntVar(value=40)
-        self.s = tkinter.IntVar(value=10)
+        self.D = tkinter.IntVar(value=610)
+        self.R = tkinter.IntVar(value=480)
+        self.r = tkinter.IntVar(value=90)
+        self.h = tkinter.IntVar(value=30)
+        self.s = tkinter.IntVar(value=4)
         self.p = tkinter.DoubleVar(value=1.0)
         self.c1 = tkinter.DoubleVar(value=2.0)
 

@@ -137,7 +137,8 @@ class SphericalItem(ThorSphericalItem):
     @property
     def _title_template(self):
         return [
-            self.data.D,
+            # self.data.D,
+            self._id,
             self.data.R,
             # self.r,
             # self.h,

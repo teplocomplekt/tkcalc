@@ -19,7 +19,8 @@ class Drawer:
         self.context.fill()
 
         self.set_line_style(LineWidth.MEDIUM, Color.BLACK)
-        self.context.select_font_face(FONT, cairo.FONT_SLANT_OBLIQUE, cairo.FONT_WEIGHT_NORMAL)
+        # self.context.select_font_face(FONT, cairo.FONT_SLANT_OBLIQUE, cairo.FONT_WEIGHT_NORMAL)
+        self.context.select_font_face(FONT, cairo.FONT_SLANT_ITALIC, cairo.FONT_WEIGHT_NORMAL)
 
     def get_coordinates(self, point):
         x = point[0]

@@ -96,7 +96,10 @@ class ActionButtonsFrame(ttk.Frame):
         calc_total_diameter = '%s мм' % round(item.get_total_diameter)
         calc_total_weight = '%s кг' % math.ceil(item.get_total_weight)
         calc_total_pressure = '{:.6f} МПа'.format(item.get_total_pressure)
-        calc_total_k = '{:.2f}'.format(item.get_k)
+        k = item.get_k
+        if k <= 1:
+            my_logger.info('Прочность не обеспечена.')
+        calc_total_k = '{:.2f}'.format(k)
 
         self.parent.parent.calc_value_frame.calc_total_height.set(calc_total_height)
         self.parent.parent.calc_value_frame.calc_total_diameter.set(calc_total_diameter)
@@ -105,7 +108,10 @@ class ActionButtonsFrame(ttk.Frame):
         self.parent.parent.calc_value_frame.calc_total_k.set(calc_total_k)
 
         if item.data.item_form == ItemFormEnum.FLAT:
-            calc_total_k1 = '{:.2f}'.format(item.get_k1)
+            k1 = item.get_k1
+            if k1 <= 1:
+                my_logger.info('Прочность не обеспечена.')
+            calc_total_k1 = '{:.2f}'.format(k1)
             self.parent.parent.calc_value_frame.calc_total_k1.set(calc_total_k1)
 
     # except Exception as e:
