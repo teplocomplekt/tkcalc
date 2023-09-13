@@ -167,3 +167,14 @@ class FlatItem(ThorSphericalItem):
             self.data.h,
             self.data.s
         ]
+
+    def check_values(self):
+
+
+        return {
+            'D': self._check_D(),
+            # 'Dm': True,
+            'R': True,
+            'r': self._check_r(),
+            's': self._check_s(),
+            'h': self._check_h()}

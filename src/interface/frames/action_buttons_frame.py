@@ -32,11 +32,24 @@ class ActionButtonsFrame(ttk.Frame):
         button_pdf.grid(row=2, column=0, **PAD, sticky=tkinter.NSEW)
 
     def auto_calc_callback(self):
-        my_logger.info('auto_calc_callback')
         self.manual_calc_callback()
+        marks = self.item.check_values()
+        self.parent.parent.right_frame.input_data_frame.mark_entries_color(marks)
 
     def manual_calc_callback(self):
-        my_logger.info('manual_calc_callback')
+
+        marks = {
+            'D': True,
+            'R': True,
+            'r': True,
+            'h': True,
+            's': True,
+            'p': True,
+            'c': True,
+        }
+        self.parent.parent.right_frame.input_data_frame.mark_entries_color(marks)
+        self.parent.parent.log_frame.clear_log()
+
         data = ItemInputDataDTO(
             item_form=self.parent.parent.item_form_frame.variable.get(),
             item_steel=self.parent.parent.item_steel_frame.variable.get(),
@@ -62,7 +75,6 @@ class ActionButtonsFrame(ttk.Frame):
         self._set_calc_values(self.item)
 
     def save_pdf_callback(self):
-        my_logger.info('save_pdf_callback')
         self.manual_calc_callback()
         render = RenderFactory.build(RenderTypeEnum.PDF)(self.item.title, PaperSize.A4_PORTRAIT)
         drawer = Drawer(render)

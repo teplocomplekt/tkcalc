@@ -1,9 +1,12 @@
+import logging
 import math
 
 from items.abstract_item import ItemInputDataDTO
 from items.thor_spherical_item import ThorSphericalItem
 from renderer.utils import LineWidth, Color
 from utils.settings import CENTER_POINT
+
+my_logger = logging.getLogger('my_logger')
 
 
 class SphericalItem(ThorSphericalItem):
@@ -140,3 +143,19 @@ class SphericalItem(ThorSphericalItem):
             # self.h,
             self.data.s,
         ]
+
+    def _check_s(self):
+        if self.s < self.s or self.s < 40:
+            return True
+        my_logger.info('Ошибка в s.(3 < s < 40)')
+        return False
+
+    def check_values(self):
+
+        return {
+            'D': self._check_D(),
+            # 'Dm': True,
+            'R': self._check_R(),
+            'r': True,
+            's': self._check_s(),
+            'h': True}

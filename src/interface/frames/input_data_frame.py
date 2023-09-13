@@ -42,3 +42,28 @@ class InputDataFrame(LabeledEntryMixin, ttk.Frame):
                 entry.configure(state=tkinter.NORMAL)
             else:
                 entry.configure(state=tkinter.DISABLED)
+
+    def mark_entries_color(self, marks=None):
+        if marks is None:
+            marks = {
+                'D': True,
+                'R': True,
+                'r': True,
+                'h': True,
+                's': True,
+                'p': True,
+                'c': True,
+            }
+
+        style_p = ttk.Style()
+        style_p.configure('P.TEntry', fieldbackground="pink")
+
+        for mark, value in marks.items():
+            entry = getattr(self, f'entry_{mark}')
+
+            if value:
+                # entry.configure(background="white")
+                entry.configure(style='TEntry')
+            else:
+                # entry.configure(background="pink")
+                entry.configure(style='P.TEntry')

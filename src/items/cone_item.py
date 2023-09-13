@@ -4,6 +4,7 @@ import math
 from items.abstract_item import AbstractItem
 from renderer.utils import LineWidth, Color
 from utils.settings import CENTER_POINT
+from utils.settings import CONE_VALUES
 
 my_logger = logging.getLogger('my_logger')
 
@@ -206,3 +207,77 @@ class ConeItem(AbstractItem):
             self.data.h,
             self.data.s
         ]
+
+    def _check_D(self):
+        if self.data.alpha == math.pi / 3:
+            alpha = '60'
+        elif self.data.alpha == math.pi / 2:
+            alpha = '90'
+        else:
+            alpha = '90'
+        if str(self.data.D) in CONE_VALUES[alpha].keys():
+            return True
+        values = ''.join(list(CONE_VALUES[alpha].keys()))
+        my_logger.info(f'''Ошибка в D. Допустимы значения: {values}.''')
+        return False
+
+    def _check_Dm(self):
+        if self.data.Dm <= 0.75 * self.data.D:
+            return True
+        my_logger.info('Ошибка в Dмал. (Dмал ≤ 0.75*Dнр)')
+        return False
+
+    def _check_r(self):
+        if self.data.alpha == math.pi / 3:
+            alpha = '60'
+        elif self.data.alpha == math.pi / 2:
+            alpha = '90'
+        else:
+            alpha = '90'
+        if CONE_VALUES[alpha].get(str(self.data.D)) is not None:
+            if str(self.data.r) in CONE_VALUES[alpha][str(self.data.D)].keys():
+                return True
+            values = ''.join(list(CONE_VALUES[alpha][str(self.data.D)].keys()))
+            my_logger.info(f'''Ошибка в r. Допустимы значения: {values}.''')
+            return False
+
+    def _check_h(self):
+        if self.data.alpha == math.pi / 3:
+            alpha = '60'
+        elif self.data.alpha == math.pi / 2:
+            alpha = '90'
+        else:
+            alpha = '90'
+        if CONE_VALUES[alpha].get(str(self.data.D)) is not None and CONE_VALUES[alpha][str(self.data.D)].get(
+                str(self.data.r)) is not None:
+            if str(self.data.h) in CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)].keys():
+                return True
+            values = ''.join(list(CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)].keys()))
+            my_logger.info(f'''Ошибка в h. Допустимы значения: {values}.''')
+            return False
+
+    def _check_s(self):
+        if self.data.alpha == math.pi / 3:
+            alpha = '60'
+        elif self.data.alpha == math.pi / 2:
+            alpha = '90'
+        else:
+            alpha = '90'
+        if CONE_VALUES[alpha].get(str(self.data.D)) is not None and CONE_VALUES[alpha][str(self.data.D)].get(
+                str(self.data.r)) is not None and CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)].get(
+            str(self.data.h)) is not None:
+            if str(self.data.s) in CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)][str(self.data.h)]:
+                return True
+            values = ''.join(list(CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)][str(self.data.h)]))
+            my_logger.info(f'''Ошибка в h. Допустимы значения: {values}.''')
+            return False
+
+    def check_values(self):
+        return {
+            'D': self._check_D(),
+            # 'Dm': self._check_Dm(),
+            'R': True,
+            'r': self._check_r(),
+            's': self._check_s(),
+            'h': self._check_h()
+        }

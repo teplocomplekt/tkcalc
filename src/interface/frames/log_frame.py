@@ -23,3 +23,8 @@ class LogFrame(tkinter.Frame):
         guiHandler = MyHandlerText(self.logtext)
         my_logger.addHandler(guiHandler)
         my_logger.setLevel(logging.INFO)
+
+    def clear_log(self):
+        self.logtext.configure(state='normal')
+        self.logtext.delete("1.0", tkinter.END)
+        self.logtext.configure(state='disabled')

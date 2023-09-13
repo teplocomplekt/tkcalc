@@ -1,8 +1,11 @@
+import logging
 import math
 
 from items.abstract_item import AbstractItem
 from renderer.utils import LineWidth, Color
-from utils.settings import CENTER_POINT
+from utils.settings import CENTER_POINT, S_MIN, S_MAX
+
+my_logger = logging.getLogger('my_logger')
 
 
 class ThorSphericalItem(AbstractItem):
@@ -204,3 +207,88 @@ class ThorSphericalItem(AbstractItem):
 
         # смещаем начало координат обратно в левый нижний угол листа
         drawer.context.restore()
+
+    def _check_D(self):
+        if self._id <= self._id or self._id <= 4000:
+            return True
+        my_logger.info('Ошибка в D. (300 ≤ D ≤ 4000)')
+        return False
+
+    def _check_R(self):
+        if self.data.R <= self.data.R or self.data.R < 10000:
+            return True
+        my_logger.info('Ошибка в R. (D*0.75 ≤ R < 10000)')
+        return False
+
+    def _check_r(self):
+        if self.data.r >= 30:
+            return True
+        my_logger.info('Ошибка в r. (r >= 30)')
+        return False
+
+    def _check_s(self):
+        coef = 1.2 if self._density < 0.00000833 else 1.5
+        r_array = [
+            30,
+            50,
+            60,
+            75,
+            80,
+            100,
+            120,
+            150,
+            180,
+            200,
+            220,
+            250,
+            300
+        ]
+        min = S_MIN[
+                  self._get_optimal(self._id, list(S_MIN.keys()))
+              ][
+                  f'r_{self._get_optimal(self.data.r, r_array)}'
+              ] / coef
+
+        max = S_MAX[
+                  self._get_optimal(self._id, list(S_MAX.keys()))
+              ][
+                  f'r_{self._get_optimal(self.data.r, r_array)}'
+              ] / coef
+        if self.data.s < self.data.s or self.data.s < max:
+            return True
+        my_logger.info(f'''Ошибка в s. ({round(min, 2)} < s < {round(max, 2)})''')
+        return False
+
+    def _check_h(self):
+        if self.data.h <= self.data.h or self.data.h <= self.data.s * 5:
+            return True
+        my_logger.info('Ошибка в h. (s*3 ≤ h ≤ s*5)')
+        return False
+
+    def _get_optimal(self, value: int, array):
+        array = list(map(int, array))
+
+        result = ''
+
+        if value <= array[0]:
+            result = array[0]
+        if value >= array[-1]:
+            result = array[-1]
+        else:
+            for i in range(len(array)):
+                if array[i] <= value < array[i + 1]:
+                    if value == array[i]:
+                        result = array[i]
+                    else:
+                        result = array[i + 1]
+        return str(result)
+
+    def check_values(self):
+        return {
+            'D': self._check_D(),
+            # 'Dm': True,
+            'R': self._check_R(),
+            'r': self._check_r(),
+            's': self._check_s(),
+            'h': self._check_h()
+        }

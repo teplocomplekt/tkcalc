@@ -1,4 +1,5 @@
 #!/bin/env python3
+from tkinter import ttk
 
 from interface.gui import App
 # from interface.gui import App
@@ -8,6 +9,7 @@ from utils.settings import APP_TITLE, BASE_DIR
 
 
 def main():
+
     root = tk.Tk()
     app = App(root)
     app.pack()

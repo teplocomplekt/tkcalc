@@ -187,3 +187,7 @@ class AbstractItem:
     @property
     def _title_template(self):
         raise NotImplementedError()
+
+    @abstractmethod
+    def check_values(self):
+        raise NotImplementedError()
