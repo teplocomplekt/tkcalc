@@ -217,7 +217,7 @@ class ConeItem(AbstractItem):
             alpha = '90'
         if str(self.data.D) in CONE_VALUES[alpha].keys():
             return True
-        values = ''.join(list(CONE_VALUES[alpha].keys()))
+        values = ', '.join(list(CONE_VALUES[alpha].keys()))
         my_logger.info(f'''Ошибка в D. Допустимы значения: {values}.''')
         return False
 
@@ -237,7 +237,7 @@ class ConeItem(AbstractItem):
         if CONE_VALUES[alpha].get(str(self.data.D)) is not None:
             if str(self.data.r) in CONE_VALUES[alpha][str(self.data.D)].keys():
                 return True
-            values = ''.join(list(CONE_VALUES[alpha][str(self.data.D)].keys()))
+            values = ', '.join(list(CONE_VALUES[alpha][str(self.data.D)].keys()))
             my_logger.info(f'''Ошибка в r. Допустимы значения: {values}.''')
             return False
 
@@ -252,7 +252,7 @@ class ConeItem(AbstractItem):
                 str(self.data.r)) is not None:
             if str(self.data.h) in CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)].keys():
                 return True
-            values = ''.join(list(CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)].keys()))
+            values = ', '.join(list(CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)].keys()))
             my_logger.info(f'''Ошибка в h. Допустимы значения: {values}.''')
             return False
 
@@ -263,12 +263,13 @@ class ConeItem(AbstractItem):
             alpha = '90'
         else:
             alpha = '90'
-        if CONE_VALUES[alpha].get(str(self.data.D)) is not None and CONE_VALUES[alpha][str(self.data.D)].get(
-                str(self.data.r)) is not None and CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)].get(
-            str(self.data.h)) is not None:
+        if CONE_VALUES[alpha].get(str(self.data.D)) is not None \
+                and CONE_VALUES[alpha][str(self.data.D)].get(str(self.data.r)) is not None \
+                and CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)].get(str(self.data.h)) is not None:
+
             if str(self.data.s) in CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)][str(self.data.h)]:
                 return True
-            values = ''.join(list(CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)][str(self.data.h)]))
+            values = ', '.join(list(CONE_VALUES[alpha][str(self.data.D)][str(self.data.r)][str(self.data.h)]))
             my_logger.info(f'''Ошибка в h. Допустимы значения: {values}.''')
             return False
 

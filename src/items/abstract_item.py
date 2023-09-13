@@ -4,7 +4,7 @@ from abc import abstractmethod
 
 from renderer.utils import LineWidth, Color
 from utils.enums import ItemFormEnum, ItemSteelEnum
-from utils.settings import Q, DEFAULT_WIDTH, A4_PORTRAIT_STAMP
+from utils.settings import Q, DEFAULT_WIDTH, A4_PORTRAIT_STAMP, DEFAULT_HIGHT
 
 
 @dataclasses.dataclass
@@ -38,12 +38,20 @@ class AbstractItem:
     @property
     def scale(self):
         if self.data.D < DEFAULT_WIDTH:
-            scale = 1
-            return scale
-        scale = self.data.D // DEFAULT_WIDTH
-        if self.data.D % DEFAULT_WIDTH > DEFAULT_WIDTH / 2:
-            scale += 0.5
-        return scale
+            scale_x = 1
+        else:
+            scale_x = self.data.D // DEFAULT_WIDTH
+            if self.data.D % DEFAULT_WIDTH > DEFAULT_WIDTH / 2:
+                scale_x += 0.5
+
+        if self.get_total_height < DEFAULT_HIGHT:
+            scale_y = 1
+        else:
+            scale_y = self.get_total_height // DEFAULT_HIGHT
+            if self.get_total_height % DEFAULT_HIGHT > DEFAULT_HIGHT / 2:
+                scale_y += 0.5
+
+        return max(scale_x,scale_y)
 
     @property
     def get_total_height(self):
