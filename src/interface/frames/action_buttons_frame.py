@@ -8,7 +8,7 @@ from items.item_factory import ItemFactory
 from renderer.drawer import Drawer
 from renderer.render import RenderFactory, RenderTypeEnum
 from renderer.utils import PaperSize
-from utils.enums import ItemFormEnum
+from utils.enums import ItemFormEnum, ItemHoleWeldEnum
 from utils.settings import PAD
 
 my_logger = logging.getLogger('my_logger')
@@ -53,7 +53,7 @@ class ActionButtonsFrame(ttk.Frame):
             chamfer=self.parent.parent.left_frame.additional_info_frame.chamfer.chamfer.get(),
             chamfer_value=self.parent.parent.left_frame.additional_info_frame.chamfer.chamfer_value.get(),
             cut=self.parent.parent.left_frame.additional_info_frame.cut_frame.cut.get(),
-            weld=self.parent.parent.left_frame.hole_weld_frame.hole_weld.get(),
+            weld=self.parent.parent.left_frame.hole_weld_frame.hole_weld.get() == ItemHoleWeldEnum.WELD,
             defects=self.parent.parent.left_frame.additional_info_frame.defects_frame.defects.get(),
             ultrasonic=self.parent.parent.left_frame.additional_info_frame.ultrasonic_frame.ultrasonic.get()
         )
