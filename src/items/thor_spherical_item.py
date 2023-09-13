@@ -185,7 +185,13 @@ class ThorSphericalItem(AbstractItem):
 
         # Размер r
         if self.data.r > 0:
-            drawer.radius_dimension(AL, self.data.r / self.scale, f'r{self.data.r}', self._angle / 2, offset=5)
+            drawer.radius_dimension(
+                AL,
+                self.data.r / self.scale,
+                f'r{self.data.r}',
+                self._angle / 2,
+                offset=5 + self.data.s / self.scale
+            )
 
         # Размер R
         drawer.radius_dimension(
@@ -193,7 +199,7 @@ class ThorSphericalItem(AbstractItem):
             self.data.R / self.scale,
             f'R{self.data.R}',
             angle=(self._angle / 2 + math.pi / 4 - self._angle1),
-            offset=5
+            offset=5 + self.data.s / self.scale
         )
 
         # смещаем начало координат обратно в левый нижний угол листа
