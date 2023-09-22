@@ -1,9 +1,8 @@
 import math
 
 import cairo
-import numpy as np
 
-from renderer.utils import LineWidth, Color
+from renderer.utils import LineWidth, Color, matrix_multiplication
 from utils.settings import FONT
 
 
@@ -95,15 +94,17 @@ class Drawer:
         self.context.save()
 
         # Вычисляем угол наклона размера
-        p = point2[0] - point1[0], point2[1] - point1[1]
-        angle = math.pi / 2 - math.atan2(*p)
+        p = [[point2[0] - point1[0]], [point2[1] - point1[1]]]
+        angle = math.pi / 2 - math.atan2(p[0][0], p[1][0])
 
-        matrix = np.array([
+        matrix = [
             [math.cos(-angle), -math.sin(-angle)],
             [math.sin(-angle), math.cos(-angle)]
-        ])
+        ]
+
         # координаты конечной точки в пространстве размера
-        p1 = matrix.dot(np.array(p))
+        p1 = matrix_multiplication(matrix, p)
+        p1 = p1[0][0], p1[1][0]
 
         self.context.translate(*point1)
         self.context.rotate(angle)
