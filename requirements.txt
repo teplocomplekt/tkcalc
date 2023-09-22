@@ -1,2 +1,2 @@
 pyinstaller==4.10
-pycairo
+pycairo==1.24
