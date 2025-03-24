@@ -6,6 +6,8 @@ from renderer.utils import LineWidth, Color
 from utils.enums import ItemFormEnum, ItemSteelEnum
 from utils.settings import Q, DEFAULT_WIDTH, A4_PORTRAIT_STAMP, DEFAULT_HIGHT
 
+from utils.settings import VENDOR_NAME
+
 
 @dataclasses.dataclass
 class ItemInputDataDTO:
@@ -121,7 +123,8 @@ class AbstractItem:
         drawer.text(title, 7, (55, 287.5), align='center', angle=math.pi, scale=0.87)
         drawer.text(f'Днище', 15, (120, 28.466675), align='center')
         drawer.text(f'Сталь {self.data.item_steel}', 10, (120, 8.953346), align='center')
-        drawer.text(f'Теплокомплект', 10, (180 - 5 / 4, 8.953346), align='center', scale=0.87)
+        # drawer.text(f'Теплокомплект', 10, (180 - 5 / 4, 8.953346), align='center', scale=0.87)
+        drawer.text(f'{VENDOR_NAME}', 10, (180 - 5 / 4, 8.953346), align='center', scale=0.87)
 
         additional = []
 

@@ -3,11 +3,14 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-VERSION = '0.9'
+VERSION = '0.9.3'
 
-APP_TITLE = f'''Калькулятор Теплокомплект v.{VERSION}'''
+# VENDOR_NAME = 'Теплокомплект'
+VENDOR_NAME = 'ООО "Ториэль"'
 
-APP_DESCRIPTION = 'Калькулятор для расчета днищ Теплокомплект'
+APP_TITLE = f'''Калькулятор {VENDOR_NAME} v.{VERSION}'''
+
+APP_DESCRIPTION = f'Калькулятор для расчета днищ {VENDOR_NAME}'
 
 DEFAULT_WIDTH = 110
 DEFAULT_HIGHT = 90
