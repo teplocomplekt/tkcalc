@@ -3,7 +3,7 @@ import math
 import cairo
 
 from renderer.utils import LineWidth, Color, matrix_multiplication
-from utils.settings import FONT
+from utils.settings import FONT, BASE_DIR
 
 
 class Drawer:
@@ -20,6 +20,46 @@ class Drawer:
         self.set_line_style(LineWidth.MEDIUM, Color.BLACK)
         # self.context.select_font_face(FONT, cairo.FONT_SLANT_OBLIQUE, cairo.FONT_WEIGHT_NORMAL)
         self.context.select_font_face(FONT, cairo.FONT_SLANT_ITALIC, cairo.FONT_WEIGHT_NORMAL)
+
+        self.draw_watermark()
+
+    def draw_watermark(self):
+        self.context.save()
+
+        try:
+            img_surface = cairo.ImageSurface.create_from_png(BASE_DIR / 'logo_1000x282.png')
+
+            image_size_width = img_surface.get_width()
+            image_size_height = img_surface.get_height()
+
+            scale = 80
+
+            self.context.scale(scale / image_size_width, scale / image_size_width)
+            self.context.rotate(math.radians(45))
+
+            for x in range(0, 6000, 1500):
+
+                self.context.save()
+
+                self.context.translate(x, 0)
+
+                self.red_dot((0, 0), '0,0')
+                self.red_dot((image_size_width, 0), f'{image_size_width},{0}')
+                self.red_dot((0, image_size_height), f'{0},{image_size_height}')
+                self.red_dot((image_size_width, image_size_height), f'{image_size_width},{image_size_height}')
+
+                self.context.transform(cairo.Matrix(yy=-1))
+                self.context.set_source_surface(img_surface, 0, -image_size_height)
+
+                self.context.paint()
+
+                self.context.restore()
+
+
+        except Exception as e:
+            print(f"Ошибка загрузки изображения: {e}")
+
+        self.context.restore()
 
     def get_coordinates(self, point):
         x = point[0]
@@ -52,11 +92,11 @@ class Drawer:
         self.context.save()
         self.context.translate(*self.get_coordinates((coordinates[0], coordinates[1])))
         self.context.set_source_rgb(0.9, 0.1, 0.1)
-        self.context.arc(0, 0, 1, 0, 2 * math.pi)
+        self.context.arc(0, 0, 10, 0, 2 * math.pi)
         self.context.fill()
         self.context.stroke()
         self.context.set_source_rgb(0, 0, 0)
-        self.text(text, 2, (0, 0))
+        self.text(text, 20, (0, 0))
         self.context.stroke()
         self.context.restore()
 
