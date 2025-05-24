@@ -32,28 +32,33 @@ class Drawer:
             image_size_width = img_surface.get_width()
             image_size_height = img_surface.get_height()
 
-            scale = 80
+            scale = 100
+            offset_factor = 700
 
             self.context.scale(scale / image_size_width, scale / image_size_width)
             self.context.rotate(math.radians(45))
 
-            for x in range(0, 6000, 1500):
+            for x in range(0, 6, 2):
+                for y in range(-2, 4, 1):
 
-                self.context.save()
+                    self.context.save()
 
-                self.context.translate(x, 0)
+                    offset_x = x*offset_factor + y*offset_factor/2
+                    offset_y = y*offset_factor
 
-                self.red_dot((0, 0), '0,0')
-                self.red_dot((image_size_width, 0), f'{image_size_width},{0}')
-                self.red_dot((0, image_size_height), f'{0},{image_size_height}')
-                self.red_dot((image_size_width, image_size_height), f'{image_size_width},{image_size_height}')
+                    self.context.translate(offset_x, offset_y)
 
-                self.context.transform(cairo.Matrix(yy=-1))
-                self.context.set_source_surface(img_surface, 0, -image_size_height)
+                    self.red_dot((0, 0), '0,0')
+                    self.red_dot((image_size_width, 0), f'{image_size_width},{0}')
+                    self.red_dot((0, image_size_height), f'{0},{image_size_height}')
+                    self.red_dot((image_size_width, image_size_height), f'{image_size_width},{image_size_height}')
 
-                self.context.paint()
+                    self.context.transform(cairo.Matrix(yy=-1))
+                    self.context.set_source_surface(img_surface, 0, -image_size_height)
 
-                self.context.restore()
+                    self.context.paint()
+
+                    self.context.restore()
 
 
         except Exception as e:
