@@ -27,13 +27,13 @@ class Drawer:
         self.context.save()
 
         try:
-            img_surface = cairo.ImageSurface.create_from_png(BASE_DIR / 'logo_1000x282.png')
+            img_surface = cairo.ImageSurface.create_from_png(BASE_DIR / 'watermark.png')
 
             image_size_width = img_surface.get_width()
             image_size_height = img_surface.get_height()
 
-            scale = 100
-            offset_factor = 700
+            scale = 80
+            offset_factor = 2000
 
             self.context.scale(scale / image_size_width, scale / image_size_width)
             self.context.rotate(math.radians(45))
@@ -48,10 +48,10 @@ class Drawer:
 
                     self.context.translate(offset_x, offset_y)
 
-                    self.red_dot((0, 0), '0,0')
-                    self.red_dot((image_size_width, 0), f'{image_size_width},{0}')
-                    self.red_dot((0, image_size_height), f'{0},{image_size_height}')
-                    self.red_dot((image_size_width, image_size_height), f'{image_size_width},{image_size_height}')
+                    # self.red_dot((0, 0), '0,0')
+                    # self.red_dot((image_size_width, 0), f'{image_size_width},{0}')
+                    # self.red_dot((0, image_size_height), f'{0},{image_size_height}')
+                    # self.red_dot((image_size_width, image_size_height), f'{image_size_width},{image_size_height}')
 
                     self.context.transform(cairo.Matrix(yy=-1))
                     self.context.set_source_surface(img_surface, 0, -image_size_height)
