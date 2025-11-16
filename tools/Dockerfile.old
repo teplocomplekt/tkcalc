@@ -1,0 +1,85 @@
+# FROM ubuntu:22.04
+# ENV DEBIAN_FRONTEND=noninteractive
+# ENV TZ=Etc/UTC
+#
+# RUN dpkg --add-architecture i386 && \
+#     apt-get update && apt-get install -y \
+#     wget \
+#     curl \
+#     git \
+#     unzip \
+#     build-essential \
+#     pkg-config \
+#     libssl-dev \
+#     libffi-dev \
+#     wine64 \
+#     wine32 \
+#     mingw-w64 \
+#     xz-utils \
+#     locales \
+#     && rm -rf /var/lib/apt/lists/*
+#
+# RUN locale-gen ru_RU.UTF-8
+# ENV LANG=ru_RU.UTF-8
+# ENV LANGUAGE=ru_RU:en
+# ENV LC_ALL=ru_RU.UTF-8
+#
+# # Скачиваем Windows Python
+# RUN wget https://www.python.org/ftp/python/3.12.0/python-3.12.0-amd64.exe -O python-installer.exe \
+#     && wine python-installer.exe /quiet InstallAllUsers=1 PrependPath=1
+#
+# # Устанавливаем Nuitka для Windows Python
+# RUN wine python.exe -m pip install --upgrade pip setuptools wheel
+# RUN wine python.exe -m pip install nuitka
+#
+# WORKDIR /app
+# ENV WINEARCH=win64
+# ENV WINEDEBUG=-all
+#
+# CMD ["bash", "-c", "wine python.exe -m nuitka --mingw64 --windows-disable-console --onefile /app/main.py"]
+
+
+# Используем официальный Python как базу
+FROM ubuntu:22.04
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN dpkg --add-architecture i386
+
+# Устанавливаем необходимые утилиты для репозитория WineHQ
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    wget \
+    gnupg2 \
+    software-properties-common \
+    apt-transport-https \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Добавляем ключ и репозиторий WineHQ
+RUN wget -O - https://dl.winehq.org/wine-builds/winehq.key | apt-key add -
+RUN add-apt-repository 'deb https://dl.winehq.org/wine-builds/ubuntu/ jammy main'
+
+# Устанавливаем зависимости для сборки и Wine
+RUN apt-get update && \
+    apt-get install -y --install-recommends winehq-stable && \
+    apt-get install -y --no-install-recommends \
+    build-essential \
+    mingw-w64 \
+    patchelf \
+    && rm -rf /var/lib/apt/lists/*
+
+# Скачиваем Windows Python
+RUN wget https://www.python.org/ftp/python/3.12.0/python-3.12.0-amd64.exe -O /tmp/python.exe
+
+# Устанавливаем Python через Wine (тихо)
+RUN wine /tmp/python.exe /quiet InstallAllUsers=1 PrependPath=1 TargetDir="C:\\Python312"
+
+# Устанавливаем Nuitka
+RUN wine "C:\\Python312\\python.exe" -m pip install --upgrade pip setuptools wheel
+RUN wine "C:\\Python312\\python.exe" -m pip install nuitka
+
+WORKDIR /app
+
+ENV WINEARCH=win64
+ENV WINEDEBUG=-all
+
+CMD ["bash"]

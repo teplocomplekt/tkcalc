@@ -8,8 +8,8 @@
 #    nuitka-project: --mode=standalonealone
 
 # nuitka-project: --enable-plugin=tk-inter
-# nuitka-project: --include-data-files=./app/assets/icon.png=assets/icon.png
-# nuitka-project: --windows-icon-from-ico=./app/assets/icon.png
+# nuitka-project: --include-data-files=./assets/icon.png=assets/icon.png
+# nuitka-project: --windows-icon-from-ico=./assets/icon.png
 
 # nuitka-project-if: {OS} == "Windows" and os.getenv("DEBUG_COMPILATION", "no") == "yes":
 #     nuitka-project: --windows-console-mode=hide
