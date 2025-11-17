@@ -3,7 +3,7 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-VERSION = '0.9.4'
+VERSION = '0.9.5'
 
 # VENDOR_NAME = 'Теплокомплект'
 VENDOR_NAME = 'ООО "Ториэль"'

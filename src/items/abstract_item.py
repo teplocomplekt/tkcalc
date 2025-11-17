@@ -114,41 +114,14 @@ class AbstractItem:
         # Масштаб
         drawer.text(f'1:{self.scale}', 7, (195, 29.966679), align='center')
 
-        # form = self.item_form.split('/')[0]
-
-        # drawer.text('Разраб.', 5, (20.5, 30.726673))
-        # title = f'Чертеж №___ {date.today().strftime("%Y.%m.%d")}'
         title = f'{self.title}'
         drawer.text(title, 10, (145, 48.953348), align='center')
         drawer.text(title, 7, (55, 287.5), align='center', angle=math.pi, scale=0.87)
         drawer.text(f'Днище', 15, (120, 28.466675), align='center')
         drawer.text(f'Сталь {self.data.item_steel}', 10, (120, 8.953346), align='center')
-        # drawer.text(f'Теплокомплект', 10, (180 - 5 / 4, 8.953346), align='center', scale=0.87)
         drawer.text(f'{VENDOR_NAME}', 10, (180 - 5 / 4, 8.953346), align='center', scale=0.87)
 
-        additional = []
-
-        if self.data.chamfer:
-            additional.append(f'''С фаской {self.data.chamfer_value} мм.''')
-        else:
-            additional.append('Без фаски.')
-        if self.data.cut:
-            additional.append('Торцовка/Подрезка.')
-
-        if self.data.weld:
-            additional.append('Заварка технологического отверстия.')
-        else:
-            additional.append('Без заварки технологического отверстия.')
-
-        if self.data.defects:
-            additional.append('Дефектоскопия.')
-
-        if self.data.ultrasonic:
-            additional.append('УЗК сварных швов.')
-
-        additional.append('Без Термообработки.')
-
-        additional.append('* - размеры для справок.')
+        additional: list[str] = self.get_default_additional()
 
         for i, text in enumerate(additional):
             drawer.text(f'{i + 1}. {text}', 7, (25, 60 + (len(additional) - i) * 7), align='left')
@@ -202,3 +175,34 @@ class AbstractItem:
     @abstractmethod
     def check_values(self):
         raise NotImplementedError()
+
+
+    def get_default_additional(self) -> list[str]:
+        additional: list[str] = []
+
+        additional.append(f'Отклонения согласно ГОСТ 34347-2017')
+        additional.append(f'Допускаемое внутренне давление {self.get_total_pressure:.6f} [МПа]')
+
+        if self.data.chamfer:
+            additional.append(f'''С фаской {self.data.chamfer_value} мм.''')
+        else:
+            additional.append('Без фаски.')
+        if self.data.cut:
+            additional.append('Торцовка/Подрезка.')
+
+        if self.data.weld:
+            additional.append('Заварка технологического отверстия.')
+        else:
+            additional.append('Без заварки технологического отверстия.')
+
+        if self.data.defects:
+            additional.append('Дефектоскопия.')
+
+        if self.data.ultrasonic:
+            additional.append('УЗК сварных швов.')
+
+        additional.append('Без Термообработки.')
+
+        additional.append('* - размеры для справок.')
+
+        return additional

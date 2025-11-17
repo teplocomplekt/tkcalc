@@ -68,7 +68,7 @@ class ActionButtonsFrame(ttk.Frame):
             cut=self.parent.parent.left_frame.additional_info_frame.cut_frame.cut.get(),
             weld=self.parent.parent.left_frame.hole_weld_frame.hole_weld.get() == ItemHoleWeldEnum.WELD,
             defects=self.parent.parent.left_frame.additional_info_frame.defects_frame.defects.get(),
-            ultrasonic=self.parent.parent.left_frame.additional_info_frame.ultrasonic_frame.ultrasonic.get()
+            ultrasonic=self.parent.parent.left_frame.additional_info_frame.ultrasonic_frame.ultrasonic.get(),
         )
         self._clear_calc_values()
         self.item = ItemFactory.build(data)
