@@ -48,11 +48,6 @@ class Drawer:
 
                     self.context.translate(offset_x, offset_y)
 
-                    # self.red_dot((0, 0), '0,0')
-                    # self.red_dot((image_size_width, 0), f'{image_size_width},{0}')
-                    # self.red_dot((0, image_size_height), f'{0},{image_size_height}')
-                    # self.red_dot((image_size_width, image_size_height), f'{image_size_width},{image_size_height}')
-
                     self.context.transform(cairo.Matrix(yy=-1))
                     self.context.set_source_surface(img_surface, 0, -image_size_height)
 
